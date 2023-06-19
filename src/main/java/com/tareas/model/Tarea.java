@@ -11,17 +11,19 @@ import lombok.Data;
 @Entity
 @Table(name = "tareas")
 public class Tarea {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nombre;
-	private boolean completado;
-	
-	
-	public Tarea(String nombre, boolean completado) {
+	private boolean completada;
+
+	public Tarea() {
+	}
+
+	public Tarea(Integer id, String nombre, boolean completada) {
 		this.nombre = nombre;
-		this.completado = completado;
+		this.completada = completada;
 	}
 
 }
