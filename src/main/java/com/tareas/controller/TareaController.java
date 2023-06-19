@@ -3,7 +3,9 @@ package com.tareas.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,9 +28,15 @@ public class TareaController {
 	}
 
 	@PostMapping
-	public void crearTarea(@RequestBody Tarea tarea) {
+	public void crearOEditarTarea(@RequestBody Tarea tarea) {
 		System.out.println("Se va a guardar lo siguiente: " + tarea);
 		tareaService.save(tarea);
+	}
+
+	@DeleteMapping(path = "/{id}")
+	public void eliminarTarea(@PathVariable("id")Integer id) {
+		System.out.println("Se va a eliminar la tarea con id " + id);
+		tareaService.delete(id);
 	}
 
 }

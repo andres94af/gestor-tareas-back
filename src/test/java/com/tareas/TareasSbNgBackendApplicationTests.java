@@ -22,7 +22,7 @@ class TareasSbNgBackendApplicationTests {
 	
 	@Test
 	void saveTareaDDBB() {
-		Tarea tarea1 = new Tarea("Estudiar ingles", false);
+		Tarea tarea1 = new Tarea(null, "Estudiar ingles", false);
 		Tarea tareaEsperada = tareaService.save(tarea1);
 		assertEquals(tareaEsperada, tarea1, "Es correcto");
 	}
