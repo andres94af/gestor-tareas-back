@@ -23,19 +23,16 @@ public class TareaController {
 
 	@GetMapping
 	public List<Tarea> obtenerTareas() {
-		System.out.println("Se llamo al get");
 		return tareaService.findAll();
 	}
 
 	@PostMapping
 	public void crearOEditarTarea(@RequestBody Tarea tarea) {
-		System.out.println("Se va a guardar lo siguiente: " + tarea);
 		tareaService.save(tarea);
 	}
 
 	@DeleteMapping(path = "/{id}")
 	public void eliminarTarea(@PathVariable("id")Integer id) {
-		System.out.println("Se va a eliminar la tarea con id " + id);
 		tareaService.delete(id);
 	}
 
