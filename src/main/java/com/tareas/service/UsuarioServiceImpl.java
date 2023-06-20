@@ -15,7 +15,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	UsuarioRepository repository;
 
 	@Override
-	public Usuario findByEmail(String email) {
+	public Optional<Usuario> findByEmail(String email) {
 		return repository.findByEmail(email);
 	}
 

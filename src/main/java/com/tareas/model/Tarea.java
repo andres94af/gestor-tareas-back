@@ -5,9 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Data;
 
-@Data
 @Entity
 @Table(name = "tareas")
 public class Tarea {
@@ -25,5 +23,36 @@ public class Tarea {
 		this.nombre = nombre;
 		this.completada = completada;
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public boolean isCompletada() {
+		return completada;
+	}
+
+	public void setCompletada(boolean completada) {
+		this.completada = completada;
+	}
+
+	@Override
+	public String toString() {
+		return "Tarea [id=" + id + ", nombre=" + nombre + ", completada=" + completada + "]";
+	}
+	
+	
 
 }
