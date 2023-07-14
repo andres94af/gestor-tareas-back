@@ -14,11 +14,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 public class WebSecurityConfig {
-	
+
 	private final UserDetailsService userDetailsService;
 	private final JWTAuthorizationFilter jwtAuthorizationFilter;
-	
-	
 
 	public WebSecurityConfig(UserDetailsService userDetailsService, JWTAuthorizationFilter jwtAuthorizationFilter) {
 		this.userDetailsService = userDetailsService;
@@ -27,32 +25,27 @@ public class WebSecurityConfig {
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
-		
+
 		JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter();
 		jwtAuthenticationFilter.setAuthenticationManager(authManager);
 		jwtAuthenticationFilter.setFilterProcessesUrl("/login");
-		
-		return http
-				.cors().and()
-				.csrf().disable()
-				.authorizeHttpRequests()
-				.anyRequest().authenticated()
-				.and()
-				.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
-				.addFilter(jwtAuthenticationFilter)
-				.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
-				.build();
+
+		return http.cors(cors -> {
+		}).csrf(c -> c.disable()).authorizeHttpRequests(auth -> {
+			auth.anyRequest().authenticated();
+		}).sessionManagement(session -> {
+			session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		}).addFilter(jwtAuthenticationFilter)
+				.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class).build();
 	}
-	
+
 	@Bean
 	AuthenticationManager authManager(HttpSecurity http) throws Exception {
-		return http.getSharedObject(AuthenticationManagerBuilder.class)
-				.userDetailsService(userDetailsService)
-				.passwordEncoder(passwordEncoder())
-				.and()
-				.build();
+		AuthenticationManagerBuilder authBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+		authBuilder
+			.userDetailsService(userDetailsService)
+			.passwordEncoder(passwordEncoder());
+		return authBuilder.build();
 	}
 
 	@Bean
